@@ -636,7 +636,7 @@ b2ContactFilter defaultFilter;
 		b2ConstantVolumeJointDef def;
 		
 		for(int i = 0; i < numberOfBodies; i++) {
-			def.addBody((b2Body*) bodies[i]);
+			def.AddBody((b2Body*) bodies[i]);
 		}
 		
 		return (jlong) world->CreateJoint(&def);	
