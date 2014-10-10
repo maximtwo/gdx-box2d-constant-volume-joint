@@ -28,7 +28,7 @@ public class ConstantVolumeJoint extends Joint {
 	
 	private native void jniInflate(long addr, float factor); /*
 		b2ConstantVolumeJoint* joint = (b2ConstantVolumeJoint*)addr;
-		joint->inflate(factor);		
+		joint->Inflate(factor);		
 	*/
 	
 }
