@@ -20,6 +20,8 @@ import java.util.Iterator;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.JointDef.JointType;
+import com.badlogic.gdx.physics.box2d.joints.ConstantVolumeJoint;
+import com.badlogic.gdx.physics.box2d.joints.ConstantVolumeJointDef;
 import com.badlogic.gdx.physics.box2d.joints.DistanceJoint;
 import com.badlogic.gdx.physics.box2d.joints.DistanceJointDef;
 import com.badlogic.gdx.physics.box2d.joints.FrictionJoint;
@@ -359,6 +361,7 @@ b2ContactFilter defaultFilter;
 		if (def.type == JointType.RopeJoint) joint = new RopeJoint(this, jointAddr);
 		if (def.type == JointType.WeldJoint) joint = new WeldJoint(this, jointAddr);
 		if (def.type == JointType.WheelJoint) joint = new WheelJoint(this, jointAddr);
+		if (def.type == JointType.ConstantVolumeJoint) joint = new ConstantVolumeJoint(this, jointAddr, ((ConstantVolumeJointDef) def).bodies);
 		if (joint != null) joints.put(joint.addr, joint);
 		JointEdge jointEdgeA = new JointEdge(def.bodyB, joint);
 		JointEdge jointEdgeB = new JointEdge(def.bodyA, joint);
@@ -428,6 +431,17 @@ b2ContactFilter defaultFilter;
 			return jniCreateWheelJoint(addr, d.bodyA.addr, d.bodyB.addr, d.collideConnected, d.localAnchorA.x, d.localAnchorA.y,
 				d.localAnchorB.x, d.localAnchorB.y, d.localAxisA.x, d.localAxisA.y, d.enableMotor, d.maxMotorTorque, d.motorSpeed,
 				d.frequencyHz, d.dampingRatio);
+		}
+		if(def.type == JointType.ConstantVolumeJoint) {
+			ConstantVolumeJointDef d = (ConstantVolumeJointDef) def;
+			
+			long[] bodies = new long[d.bodies.size];
+			
+			for(int i = 0; i < bodies.length; i++) {
+				bodies[i] = d.bodies.get(i).addr;
+			}
+			
+			return jniCreateConstantVolumeJoint(addr, bodies, bodies.length);
 		}
 
 		return 0;
@@ -614,6 +628,18 @@ b2ContactFilter defaultFilter;
 		def.dampingRatio = dampingRatio;
 	
 		return (jlong)world->CreateJoint(&def);
+	*/
+	
+	private native long jniCreateConstantVolumeJoint(long addr, long[] bodies, int numberOfBodies); /*
+	
+		b2World* world = (b2World*) addr;
+		b2ConstantVolumeJointDef def;
+		
+		for(int i = 0; i < numberOfBodies; i++) {
+			def.addBody((b2Body*) bodies[i]);
+		}
+		
+		return (jlong) world->CreateJoint(&def);	
 	*/
 
 	/** Destroy a joint. This may cause the connected bodies to begin colliding.

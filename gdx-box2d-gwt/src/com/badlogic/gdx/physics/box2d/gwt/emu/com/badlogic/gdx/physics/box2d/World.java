@@ -26,6 +26,8 @@ import org.jbox2d.dynamics.joints.JointEdge;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.JointDef.JointType;
+import com.badlogic.gdx.physics.box2d.joints.ConstantVolumeJoint;
+import com.badlogic.gdx.physics.box2d.joints.ConstantVolumeJointDef;
 import com.badlogic.gdx.physics.box2d.joints.DistanceJoint;
 import com.badlogic.gdx.physics.box2d.joints.FrictionJoint;
 import com.badlogic.gdx.physics.box2d.joints.GearJoint;
@@ -182,6 +184,7 @@ public final class World implements Disposable {
 		if (def.type == JointType.RopeJoint) joint = new RopeJoint(this, (org.jbox2d.dynamics.joints.RopeJoint)j);
 		if (def.type == JointType.WeldJoint) joint = new WeldJoint(this, (org.jbox2d.dynamics.joints.WeldJoint)j);
 		if (def.type == JointType.WheelJoint) joint = new WheelJoint(this, (org.jbox2d.dynamics.joints.WheelJoint)j);
+		if (def.type == JointType.ConstantVolumeJoint) joint = new ConstantVolumeJoint(this, (org.jbox2d.dynamics.joints.ConstantVolumeJoint) j, ((ConstantVolumeJointDef) def).bodies);
 		if (joint == null) throw new GdxRuntimeException("Joint type '" + def.type + "' not yet supported by GWT backend");
 		joints.put(j, joint);
 		return joint;
