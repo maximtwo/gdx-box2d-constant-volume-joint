@@ -1,0 +1,3 @@
+[submodule "gdx-box2d/jni/Box2D"]
+	path = gdx-box2d/jni/Box2D
+	url = https://github.com/maximtwo/box2d-source.git
