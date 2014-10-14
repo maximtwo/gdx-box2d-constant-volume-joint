@@ -28,7 +28,9 @@
                 <groupId>com.googlecode.maven-download-plugin</groupId>
                 <artifactId>maven-download-plugin</artifactId>
                 <version>1.1.0</version>
-                <executions>
+
+<!-- don't download the prebuilt natives from the libgdx build server -->
+<!--                <executions>
                     <execution>
                         <id>desktop</id>
                         <phase>process-resources</phase>
@@ -73,7 +75,7 @@
                             <outputDirectory>${project.build.directory}/armeabi-v7a</outputDirectory>
                         </configuration>
                     </execution>
-
+-->
                     <execution>
                         <id>ios-gdx</id>
                         <phase>process-resources</phase>
